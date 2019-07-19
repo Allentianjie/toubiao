@@ -1,0 +1,124 @@
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 16px;
+  background-color: #f5f5f5;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+
+::-webkit-scrollbar-track {
+  background-color: rgba(255, 255, 255, .63);
+  border-radius: 6px;
+
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+}
+
+/*定义滑块 内阴影+圆角*/
+
+::-webkit-scrollbar-thumb {
+  background-color: #719ad8;
+  border-radius: 6px;
+
+  -webkit-box-shadow: inset 0 0 6px rgba(113, 154, 216, .3);
+}
+
+.role {
+  // padding: 10px;
+  // overflow: hidden;
+  // overflow-y: auto;
+  // height: 250px;
+}
+
+.department {
+  overflow: hidden;
+  overflow-y: auto;
+  height: 100%; // border-radius: 3px;
+  padding: 10px;
+  // -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3), 0 0 40px rgb(255, 255, 255) inset;
+  // -moz-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3), 0 0 40px rgb(255, 255, 255) inset;
+  // -o-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3), 0 0 40px rgb(255, 255, 255) inset;
+  // box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3), 0 0 40px rgb(255, 255, 255) inset;
+   > ul {
+    height: 100%;
+    background: #719ad8;
+     > li {
+      width: 100%;
+      height: 25px;
+      line-height: 25px;
+      text-align: center;
+      text-decoration: none;
+      list-style: none;
+      border: 1px solid #ddd;
+    }
+  }
+}
+
+.content {
+  overflow: hidden;
+  overflow-y: auto;
+  width: 100%;
+  height: 190px;
+  padding: 0 10px;
+          box-shadow: 0 1px 6px rgba(0, 0, 0, .3), 0 0 40px rgb(255, 255, 255) inset;
+  border-radius: 3px;
+
+  -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, .3), 0 0 40px rgb(255, 255, 255) inset;
+     -moz-box-shadow: 0 1px 6px rgba(0, 0, 0, .3), 0 0 40px rgb(255, 255, 255) inset;
+       -o-box-shadow: 0 1px 6px rgba(0, 0, 0, .3), 0 0 40px rgb(255, 255, 255) inset;
+  .docList {
+    width: 100%;
+    height: 35px;
+    margin-top: 5px;
+    background: #f6f9ff;
+    border-radius: 3px;
+    .listItem {
+      float: left;
+      display: inline-block;
+      width: 10%;
+      height: 35px;
+      color: #94c6e7;
+      font-size: 30px;
+      line-height: 35px;
+    }
+    .listContent {
+      float: left;
+      overflow: hidden;
+      width: 65%;
+      height: 35px;
+      margin-left: 10%;
+      line-height: 35px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .deleteIcon {
+      float: left;
+      // margin-left: 5%;
+      width: 10%;
+      height: 35px;
+      color: red;
+      font-size: 15px;
+      line-height: 35px;
+      text-align: center;
+    }
+  }
+}
+.tableList {
+  position: relative;
+  width: 100%;
+  height: auto;
+  .header {
+    width: 100%;
+    height: 20px;
+    .addTableItem:hover {
+      cursor: pointer;
+    }
+    .addTableItem {
+      float: right;
+      display: inline-block;
+      color: #19be6b;
+      font-size: 20px;
+    }
+  }
+}

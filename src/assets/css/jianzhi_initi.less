@@ -1,0 +1,121 @@
+// 2019年5月2日11:05:38
+// 建职版 新增弹框格式化样式
+
+// 建职版 -- 新增弹框样式 - s
+.jianzhi-dialog-box {
+  .el-dialog {
+    .el-dialog__title {
+      //color: rgba(38, 38, 38, 0.76);
+      font-weight: 700;
+    }
+
+    .el-dialog__body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      padding: 0;
+
+      .box-body {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        padding: 25px 25px 30px;
+
+        .box-title {
+          width: 100%;
+          height: 50px;
+          line-height: 50px;
+          margin-bottom: 16px;
+        }
+
+        .box-con {
+          width: 100%;
+          flex: 1;
+          overflow: hidden;
+          overflow-y: auto;
+
+          .el-date-editor .el-range-separator {
+            width: 30px;
+          }
+
+          .el-date-editor .el-range-input {
+            width: 160px;
+          }
+
+          .el-table {
+            border: 0 none;
+          }
+        }
+
+        .box-foot {
+          width: 100%;
+          height: 40px;
+          line-height: 40px;
+          margin-top: 16px;
+        }
+
+        .box-con.noroll {
+          overflow: hidden;
+        }
+      }
+
+      .box-body.padd_0 {
+        padding: 0;
+      }
+    }
+  }
+
+  .el-dialog.is-fullscreen {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+  }
+
+  .el-dialog.is-fullscreen.w50 {
+    width: 50%;
+  }
+
+  .el-dialog.is-fullscreen.w60 {
+    width: 60%;
+  }
+
+  .el-dialog.is-fullscreen.w70 {
+    width: 70%;
+  }
+
+  .el-dialog.is-fullscreen.w80 {
+    width: 80%;
+  }
+
+  .el-dialog.is-fullscreen.w90 {
+    width: 90%;
+  }
+
+  .el-dialog.is-fullscreen.h50 {
+    height: 50%;
+    top: 25%;
+  }
+
+  .el-dialog.is-fullscreen.h60 {
+    height: 60%;
+    top: 20%;
+  }
+
+  .el-dialog.is-fullscreen.h70 {
+    height: 70%;
+    top: 15%;
+  }
+
+  .el-dialog.is-fullscreen.h80 {
+    height: 80%;
+    top: 10%;
+  }
+
+  .el-dialog.is-fullscreen.h90 {
+    height: 90%;
+    top: 5%;
+  }
+}
+
+// 建职 弹框 -e

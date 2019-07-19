@@ -1,0 +1,113 @@
+.perviewModel{
+    .ivu-modal{
+      margin: 0 auto;
+      position: relative;
+      outline: 0;
+      top: 60px;
+    }
+}
+
+#fileSummaryPage {
+  width: 100%;
+  height: 100%;
+  .taskSummaryItem {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    .summaryEchart {
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      border-radius: 1px;
+      position: relative;
+      padding: 10px 20px;
+      .mainDiv{
+        width: 100%;
+        height: calc(100% - 120px);
+        .main {
+          height: 100%;
+          >div{
+            //height: 50%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+          }
+          .divHeight1{
+            height: 50%;
+          }
+          .divHeight2{
+            height:100%;
+          }
+          .mainTop{
+            width: 90%;
+            height: 46%;
+            display: flex;
+            justify-content: center;
+            //position: relative;
+            //align-items: flex-end;
+            background-image: url("../../assets/images/jiazi.png");
+            background-size:100% auto ;
+            background-repeat:no-repeat;
+            >.textbookTOP{
+              width: 16%;
+              height: 180%;
+              cursor: pointer;
+              //position: absolute;
+              background-image: url("../../assets/images/shuben.png");
+              background-size:100% auto ;
+              background-repeat:no-repeat;
+              //top: 30px;
+              margin-top: -14%;
+              margin-right: 3%;
+              text-align: left;
+              >p{
+                width: 80%;
+                padding-left:10% ;
+                font-size: 12px;
+                margin-top: 3%;
+              }
+              >h4{
+                width: 80%;
+                padding-left:10% ;
+                margin-top: 10%;
+                color: #1EA3CE;
+              }
+              >p:last-child{
+                color: #999;
+                font-size: 14px;
+                font-weight: 700;
+              }
+            }
+            >.textbookTOP:last-child{
+              margin-right:0;
+            }
+
+          }
+          .mainBottom{
+            border: 1px solid red;
+            width: 100%;
+            height: 46%;
+            position: relative;
+            background-image: url("../../assets/images/jiazi.png");
+            background-size:100% auto ;
+            background-repeat:no-repeat;
+            >.textbookBottom{
+              border: 1px solid blue;
+              width: 17%;
+              height: 100%;
+              position: absolute;
+              background-image: url("../../assets/images/shuben.png");
+              background-size:100% auto ;
+              background-repeat:no-repeat;
+              top: -150px
+            }
+          }
+        }
+      }
+
+    }
+
+  }
+
+}
+

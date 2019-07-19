@@ -1,0 +1,170 @@
+/*
+* liao
+* 2019年4月28日11:55:56
+*/
+
+.portrayal {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  padding: 1% 0;
+  overflow: hidden;
+
+  .main-roll {
+    width: 100%;
+    height: 100%;
+    padding: 0 1%;
+    overflow: hidden;
+    overflow-y: auto;
+  }
+
+  .main-body {
+    // 用户信息
+    .user-info {
+      width: 100%;
+      height: 220px;
+      background: #fff;
+      background-image: url("../../assets/images/portrayal/info-bg.png");
+      background-size: auto 100%;
+      background-repeat: no-repeat;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: row;
+
+      .user-img {
+        width: 220px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+
+        img {
+          width: 100px;
+          height: auto;
+          margin-top: 30px;
+        }
+
+        span {
+          width: 100%;
+          font-size: 28px;
+          margin-top: 8px;
+          text-align: right;
+        }
+      }
+
+      .user-con {
+        flex: 1;
+        padding: 20px;
+        display: flex;
+        font-size: 16px;
+        flex-direction: row;
+        justify-content: left;
+        align-items: center;
+
+        .con-info {
+          width: 200px;
+        }
+
+        .con-item {
+          flex: 1;
+          display: flex;
+          padding-left: 20px;
+          flex-direction: row;
+          flex-wrap: wrap;
+        }
+      }
+    }
+
+    // 层级内容
+    .layer {
+      background: #fff;
+      padding: 20px 10px 10px 10px;
+      overflow: hidden;
+      border-radius: 6px;
+      margin-bottom: 20px;
+
+      .title {
+        height: 40px;
+        line-height: 40px;
+        padding-left: 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        font-size: 16px;
+        font-weight: bold;
+
+        i {
+          top: 21px;
+          left: 20px;
+          width: 4px;
+          height: 20px;
+          background: #2429aa;
+          margin-right: 10px;
+        }
+      }
+
+      .layer-body {
+        flex: 1;
+        background: #f60;
+      }
+
+      .con {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+    }
+
+    // 公用的 item 样式
+    .item {
+      width: 25%;
+      display: flex;
+      flex-direction: column;
+
+      .item-con {
+        flex: 1;
+        margin: 10px;
+        padding: 20px;
+        cursor: pointer;
+        overflow: hidden;
+        border-radius: 6px;
+        background: #e7eefe;
+        transition: all .1s linear;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        
+        div {
+          p {
+            font-size: 16px;
+            font-weight: bold;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          p:last-child {
+            font-weight: normal;
+          }
+
+          span {
+            font-size: 32px;
+            color: #4d7dd7;
+            font-weight: 400;
+          }
+        }
+      }
+
+      .item-con:hover {
+        margin-top: 0px;
+      }
+    }
+
+    .layer:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

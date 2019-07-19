@@ -1,0 +1,61 @@
+{
+    "flight": {
+        "data": [
+            [
+                43,
+                1496840400000,
+                1496934000000,
+                "M766OG",
+                true,
+                "QW",
+                "QW",
+                "XGF-HAC",
+                "HAC-CFA",
+                1495360800000
+            ],
+            [
+                317,
+                1496840400000,
+                1496934000000,
+                "Y3683",
+                true,
+                "AS",
+                "AS",
+                "MGT-HAC",
+                "HAC-YPP",
+                1496830500000
+            ]
+        ],
+        "dimensions": [
+            "Parking Apron Index",
+            "Arrival Time",
+            "Departure Time",
+            "Flight Number",
+            "VIP",
+            "Arrival Company",
+            "Departure Company",
+            "Arrival Line",
+            "Departure Line",
+            "Report Time"
+        ]
+    },
+    "parkingApron": {
+        "data": [
+            [
+                "AB94",
+                "W",
+                true
+            ],
+            [
+                "AB95",
+                "W",
+                true
+            ]
+        ],
+        "dimensions": [
+            "Name",
+            "Type",
+            "Near Bridge"
+        ]
+    }
+}

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="./css/element.css" />
+    <link rel="stylesheet" type="text/css" href="./css/base.css" />
+    <link rel="stylesheet" type="text/css" href="./css/index.css" />
+    <script src="./js/jquery/axios.min.js"></script> 
+    <script src="./js/jquery/jquery.js"></script>
+    <!-- vue -->
+    <script src="./js/vue/vue.js"></script>
+    <script src="./js/vue/element.js"></script>
+    <script src="./js/vue/vue-grid-layout.min.js"></script>
+    <script src="./js/vue/vue-drag-resize.js"></script>
+  
+	<!--[if IE]> 
+		<script src="./js/polyfill.min.js"></script>
+	    <script src="./js/bluebird.min.js"></script>
+	<![endif]-->
+	
+    <!-- 百度 echarts -->
+    <script src="./js/echarts/echarts.min.js"></script>
+    <script src="./js/echarts/dark.js"></script>
+    <script src="./js/echarts/v-echarts.js"></script>
+    <script src="./js/chartTypes.js"></script>
+    <!-- other   -->
+    <script src="./js/util.js"></script>
+    <script src="./api/index.js"></script>
+</head>
+<body>
+    <section id="view" v-cloak>
+        <div style="width:99%;">
+            <div style="margin-left: 10px;">            
+                <el-breadcrumb v-if="breadcrumbView" separator=">">
+                    <el-breadcrumb-item :key="index" v-for="(item,index) in breadcrumbList">
+                        <span style="color:#d80c4e;cursor: pointer;" @click="goNext(item.baseId)">{{item.name}}</span>
+                    </el-breadcrumb-item>
+                </el-breadcrumb>
+            </div>
+            <hr style="margin-top: 10px;margin-bottom: 5px;">
+            <el-row v-loading="pageLoading" style="margin-left: 5px;margin-right: -10px;">
+                <el-col :span="14">
+                    <div style="width:100%;height:100%;">
+                        <el-tabs v-model="activeName" @tab-click="handleClick">
+                            <el-tab-pane label="折线图" name="line"></el-tab-pane>
+                            <el-tab-pane label="柱状图" name="histogram"></el-tab-pane>
+                            <el-tab-pane label="条形图" name="bar"></el-tab-pane>
+                            <el-tab-pane label="饼图" name="pie"></el-tab-pane>
+                            <el-tab-pane label="环图" name="ring"></el-tab-pane>
+                            <el-tab-pane label="瀑布图" name="waterfall"></el-tab-pane>
+                            <el-tab-pane label="漏斗图" name="funnel"></el-tab-pane>
+                            <el-tab-pane label="雷达图" name="radar"></el-tab-pane>
+                        </el-tabs>
+                        <chart-drill style="min-height:450px;" v-if="isShow" ref="chartView" :item="item" :theme="item.chartTheme"></chart-drill>
+                        <el-alert style="width: 95%;height: 230px;padding-left: 45%;"  :closable="false" v-if="!isShow" type="warning" description="无数据" show-icon></el-alert>  
+                    </div>
+                </el-col>
+                <el-col :span="10">
+                    <p style="margin-top: 8px;font-size: 15px;">表格
+                        <span style="color: #d80c4e;font-size: 14px;font-weight:600;">[当前维度: <span v-if="!queryParams.queryWord">最新维度</span><span v-else>{{queryParams.queryWord}}</span>]
+                        </span>
+                    </p>
+                    <div style="margin-top: 10px;border-top: 2px solid #e4e7ed;">
+                        <el-table size="small" :data="rowsData" @row-click="clickCom" stripe style="width: 100%">
+                            <el-table-column prop="name" show-overflow-tooltip="true" label="名称" width="180"></el-table-column>
+                            <el-table-column prop="dim" show-overflow-tooltip="true" label="时间维度"></el-table-column>
+                            <el-table-column prop="unit" label="单位"></el-table-column>
+                            <el-table-column prop="value" label="数值"></el-table-column>
+                        </el-table>
+                    </div>
+                </el-col>
+            </el-row>
+        </div>
+    </section>
+</body>
+<script src="js/components/chart-drill.js"></script>
+<script src="js/components/chart-options.js"></script>
+<script src="js/components/chart-theme.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#view',
+        data: {
+            loading: false,
+            isShow: false,
+            pageLoading:false,
+            activeName: 'line',
+            item: {
+                markLine: false,
+                markPoint: false,
+                toolbox: {},
+                chartStack: false,
+                chartTheme: {},
+                chartName: 'test',
+                chartRefId: '11111',
+                settings: {
+                    dataName: [],
+                    seriesMap: []
+                },
+                options: {},
+                chartData:[]
+            },
+            chartEvents: {
+                click: function(e) {
+                }.bind(this)
+            },
+            queryParams:{
+                baseId : util.urlStr('baseId'),
+                moduleId : util.urlStr('moduleId'),
+                queryWord : util.urlStr('queryWord'),
+                type : util.urlStr('type'),
+            },
+            detailsParams:[],
+            rowsData :  [],
+            breadcrumbView : false,
+            breadcrumbList:[],
+            breadcrumbNotNext:true,
+        },
+        components: {
+            'grid-layout': VueGridLayout.GridLayout,
+            'grid-item': VueGridLayout.GridItem
+        },
+        mounted: function() {
+            this.getChartType();
+        },
+        created: function() {
+            this.ajaxTableData();            
+        },
+        methods: {
+            clickCom:function(v, event, column){
+                this.queryParams.baseId = v.dataId;
+                this.breadcrumbNotNext = true;
+                if(!this.queryParams.queryWord){
+                    this.queryParams.queryWord = v.dim;
+                }
+                for(let i in this.breadcrumbList){
+                    if(this.breadcrumbList[i].baseId == v.dataId){
+                        this.breadcrumbNotNext = false;
+                        break;
+                    }
+                }
+                this.ajaxTableData(); 
+            },
+            //下钻跳转
+            goUrl:function(baseId){
+                this.queryParams.baseId = baseId;
+                this.breadcrumbNotNext = true
+                //
+                for(let t in this.breadcrumbList){
+                    if(this.breadcrumbList[t].baseId == baseId ){
+                        this.breadcrumbNotNext = false;
+                        break;
+                    }
+                }
+                if(!this.queryParams.queryWord){
+                    for(let i in this.rowsData){
+                        if(this.rowsData[i].dataId == baseId){
+                            this.queryParams.queryWord = this.rowsData[i].dim;
+                            this.ajaxTableData(); 
+                            return
+                        }
+                    }
+                }else{
+                    this.ajaxTableData(); 
+                }
+            },
+            goNext:function(baseId){
+                this.queryParams.baseId = baseId;
+                this.breadcrumbNotNext = false
+                this.ajaxTableData(); 
+            },
+            //获取图表数据
+            ajaxTableData:function(){
+                var this_ = this;
+                api.getDrillData(this_.queryParams).then(function(result) {
+                    
+                    if(result.data.code == 0){
+                        this_.pageLoading = true;
+                        let childData = result.data.data.childData;
+                        this_.detailsParams = [];
+                        this_.rowsData = [];
+                        this_.breadcrumbView = false
+                        this_.isShow = false;
+                        if(childData.length > 0){
+                            for(let i in childData){
+                                this_.rowsData.push({
+                                    dim: childData[i].dimension,
+                                    name: childData[i].dataName,
+                                    unit: childData[i].dataUnit,
+                                    value:childData[i].dataValue,
+                                    dataId:childData[i].dataId,
+                                })
+                            }
+                        }
+                        if(result.data.data.chartData && result.data.data.chartData.rows.length > 0 ){
+                            this_.item.chartData = result.data.data.chartData;
+                            this_.isShow = true;
+                        }else{
+                            this_.isShow = false;
+                        }
+                        //
+                        let parant = result.data.data.parantData;
+                        if(this_.breadcrumbNotNext){
+                            this_.breadcrumbList.push({'baseId': parant.dataId ,'name': parant.dataName });
+                        }
+                        this_.breadcrumbView = true
+                        this_.pageLoading = false;
+                    }else{
+                        this_.$message({message: result.data.msg ,type: 'error'});
+                    }
+                });
+            },
+            //图表切换
+            handleClick: function(tab, event) {
+                this.getChartType();
+            },
+            //获取类型
+            getChartType: function() {
+                var type = ChartType.get(this.activeName);
+                this.item.settings = type.settings;
+                this.item.options = type.options;
+            },
+            //获取参数
+            getUrlStr: function(name) {
+                var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
+                var r = window.location.search.substr(1).match(reg)
+                if (r != null) return unescape(r[2])
+                return null
+            },
+        }
+    })
+</script>
+
+</html>

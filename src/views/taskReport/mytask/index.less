@@ -1,0 +1,142 @@
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+
+
+.fileBox {
+  width: 100%;
+  min-height: 100px;
+  text-align: left;
+  .content {
+    overflow: hidden;
+    overflow-y: auto;
+    width: 100%;
+    height: 105px;
+    padding: 0 10px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .3), 0 0 40px rgb(255, 255, 255) inset;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, .3), 0 0 40px rgb(255, 255, 255) inset;
+    -moz-box-shadow: 0 1px 6px rgba(0, 0, 0, .3), 0 0 40px rgb(255, 255, 255) inset;
+    -o-box-shadow: 0 1px 6px rgba(0, 0, 0, .3), 0 0 40px rgb(255, 255, 255) inset;
+
+    .docList {
+      width: 100%;
+      height: 35px;
+      margin-top: 5px;
+      background: #f6f9ff;
+      border-radius: 3px;
+
+      .listItem {
+        float: left;
+        display: inline-block;
+        width: 10%;
+        height: 35px;
+        color: #94c6e7;
+        font-size: 30px;
+        line-height: 35px;
+      }
+
+      .listContent {
+        float: left;
+        overflow: hidden;
+        width: 40%;
+        height: 35px;
+        margin-left: 10%;
+        line-height: 35px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .deleteIcon {
+        float: right;
+        width: 10%;
+        height: 35px;
+        margin-left: 5%;
+        color: red;
+        font-size: 15px;
+        line-height: 35px;
+        text-align: center;
+      }
+
+      .deleteIcon1 {
+        float: left;
+        width: 10%;
+        height: 35px;
+        margin-left: 5%;
+        color: red;
+        font-size: 15px;
+        line-height: 35px;
+        text-align: center;
+      }
+    }
+  }
+}
+
+#taskSummaryPage {
+  width: 100%;
+  height: 100%;
+  .taskSummaryItem {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    padding: 10px 0;
+    .summaryEchart {
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      border-radius: 1px;
+      position: relative;
+      padding: 10px 20px;
+
+      .searchBox {
+        width: 25%;
+        height: 40px;
+        // background: #719ad8;
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        z-index: 1000;
+      }
+    }
+  }
+
+  .taskSummaryItemTop {
+    width: 100%;
+    height: 55%;
+    margin: 0 auto;
+    position: relative;
+
+    .summaryEchart {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      //padding: 10px 0;
+
+      .left {
+        flex: 0 0 49.5%;
+        text-align: left;
+        border-radius: 1px;
+        background: #fff;
+
+        .imgs {
+          width: 40px;
+          height: 40px;
+          position: absolute;
+          top: 15%;
+          left: 5%;
+          z-index: 1000;
+          //background-image: url('../../../assets/images/baojing.png');
+          //background-size: 100% 100%
+        }
+
+      }
+
+      .right {
+        flex: 0 0 49.5%;
+        margin-left: 1%;
+        text-align: left;
+        border-radius: 1px;
+        background: #fff;
+
+      }
+    }
+  }
+}

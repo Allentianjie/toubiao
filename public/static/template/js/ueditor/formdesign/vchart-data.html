@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>数据采集平台-迈越科技</title>
+    <meta name="description" content="数据采集平台0801">
+    <meta name="key名称s" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <!--<link rel="shortcut icon" href="./assets/img/lzzy.ico" />-->
+    <script src="bootstrap/js/jquery.min.js"></script>
+	<script src="v-chart/vue.js"></script>
+	<script src="v-chart/echarts.min.js"></script>
+	<script src="v-chart/v-echarts.js"></script>
+	<!-- 词云图依赖 -->
+	<script src="v-chart/echarts-wordcloud.min.js"></script>
+	<style>
+		#app{
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+</head>
+<body>
+<div id="app">
+   <!-- 折线图 -->
+   <ve-line :data="chartData"></ve-line>
+</div>
+	
+<script type="text/javascript">
+  var data = {
+		  "unit": [
+			"名称",
+			"人",
+			"人",
+			"人"
+		  ],
+		  "size": "5",
+		  "columns": [
+			"名称",
+			"男(人)",
+			"女(人)",
+			"学院(人)"
+		  ],
+		  "currentQuery": "最新",
+		  "rank": "e",
+		  "id": "10001111111111111111111111100111",
+		  "conditions": [
+			"最新",
+			"2018",
+			"2017",
+			"2016",
+			"2015",
+			"2014",
+			"2013"
+		  ],
+		  "type": [
+			"string",
+			"0",
+			"0",
+			"0"
+		  ],
+		  "rows": [
+			{
+			  "id": [
+				"7A8B22D8A1042D29E0530100007F14AF",
+				"7A9818476265585DE0530100007FA68C"
+			  ],
+			  "名称": "土木工程系",
+			  "女(人)": 150,
+			  "学院(人)": 1313
+			},
+			{
+			  "id": [
+				"7A8B22D8A0FE2D29E0530100007F14AF",
+				"7A9818476266585DE0530100007FA68C",
+				"7A99109C7E9B0DAAE0530100007FE236"
+			  ],
+			  "名称": "规划与建筑系",
+			  "女(人)": 163,
+			  "学院(人)": 474,
+			  "男(人)": 311
+			},
+			{
+			  "id": [
+				"7A8B22D8A0FF2D29E0530100007F14AF",
+				"7A9818476264585DE0530100007FA68C",
+				"7A99109C7E9C0DAAE0530100007FE236"
+			  ],
+			  "名称": "计算机与信息工程系",
+			  "女(人)": 180,
+			  "学院(人)": 602,
+			  "男(人)": 422
+			}
+		  ]
+		}  
+	  
+	  
+    
+	
+	
+	
+	new Vue({
+      el: '#app',
+      data: function () {
+			this.chartSettings = {
+				selectedMode: 'single',
+				hoverAnimation: false
+			  }
+			var self = this
+			this.chartEvents = {
+				click: function (e) {
+				  
+				  var rowIndex = e.dataIndex;//点击数据行
+				  var seriesIndex = e.seriesIndex;//点击的子数据下标 ---> 与 id 组相对应
+				  var ids = data.rows[rowIndex].id; //行数据 id组
+				   console.log('rows数据组下标:' + rowIndex + ' , 行数据ID组:' + JSON.stringify(ids))
+				   console.log('seriesIndex-id:' + ids[seriesIndex])
+				  //self.name = e.name
+				   
+				}
+		    }
+           return { 
+		     chartData: data 
+		   }
+		}
+    })
+	
+	
+
+
+
+
+
+	
+			
+		
+		
+   
+		
+
+</script>
+</body>
+</html>

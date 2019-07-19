@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="./css/element.css" />
+  <link rel="stylesheet" type="text/css" href="./css/base.css" />
+  <link rel="stylesheet" type="text/css" href="./css/index.css" />
+  <!-- jquery -->
+  <script src="./js/jquery/jquery.js"></script>
+  <script src="./js/jquery/axios.min.js"></script>
+  <!-- vue  -->
+  <script src="./js/vue/vue.js"></script>
+  <script src="./js/vue/element.js"></script>
+  <script src="./js/vue/vue-grid-layout.min.js"></script>
+  <script src="./js/vue/vue-drag-resize.js"></script>
+  <!--[if IE]> 
+		<script src="./js/polyfill.min.js"></script>
+	    <script src="./js/bluebird.min.js"></script>
+  <![endif]-->
+  <!-- 百度 echarts -->
+  <script src="./js/echarts/echarts.min.js"></script>
+  <script src="./js/echarts/dark.js"></script>
+  <script src="./js/echarts/v-echarts.js"></script>
+  <!-- other -->
+  <script src="./js/util.js"></script>
+  <script src="./api/index.js"></script>
+
+</head>
+<body>
+<section id="view" v-cloak>
+    <div class="wrap flex" style="flex-direction: column;">
+    <!-- 头部  start -->
+    <div class="header" style="height:47px;">
+        <div class="flex">
+          <!-- 角色选择名称 -->
+          <div class="header-logo" style="width:320px;">
+            <span style="font-size: 10px;color: #000000">我的驾驶舱</span>
+            <el-cascader size="mini" :options="cockitRoles" v-model="selectedCockitRole" @change="handleRoleChange"></el-cascader>
+          </div>
+        </div>
+    </div>
+    <!-- 头部 end -->
+
+    <!-- 功能模块 -->
+    <div class="func_nav">
+        <el-breadcrumb separator="|">
+          <el-breadcrumb-item>
+            当前模块：<span style="color:rgb(17, 53, 170);font-weight:600;">{{selectFuncName}}</span>
+          </el-breadcrumb-item>
+          <el-breadcrumb-item :key="index" v-for="(item,index) in menuList">
+            <span @click="menuEvent(item.funcId)" style="cursor:pointer;">{{item.funcName}}</span>
+          </el-breadcrumb-item>
+        </el-breadcrumb>
+    </div>
+    <!-- 功能模块 end -->
+
+    <!-- body -->
+    <div class="main-body">
+        <!-- 暂无内容 -->
+        <div v-if="noCentontShow" style="margin:auto;margin-left: 45%;font-size: 30px;color: #ccc;">
+            <i class="el-icon-info"></i><span>暂无内容</span>
+        </div>
+        <!-- 编辑模块 -->
+        <div class="main-content drawing-board" v-loading="pageLayout.loading"  element-loading-background="rgba(0, 0, 0, 0)">
+            <!-- 模块 -->
+            <grid-layout :auto-size="true" :col-num="4" v-if="!pageLayout.loading" :layout="pageLayout.children" :row-height="200" :max-rows="20" :is-draggable="isEdit" :is-resizable="isEdit" :vertical-compact="true" :margin="[16, 16]" :use-css-transforms="true">
+              <grid-item class="vdr" v-for="(v,k) in pageLayout.children" :key="v.i" :x="v.x" :y="v.y" :w="v.w" :h="v.h" :i="v.i" @resized="resizeEvent(v)">
+                <div class="title" :style="'font-size:' + v.titleFont + 'px'"><span class="before">{{v.name}}</span></div>
+                <i v-if="isEdit" @click="deleteLayer(k)" class="icon el-icon-circle-close"></i>
+                <i v-if="isEdit" @click="layerDialogEvent(v,k)" class="icon el-icon-edit-outline"></i>
+                <!-- iframe -->
+							  <div style="width:100%;height:100%;" v-if="v.url && v.type == 'ifarme'">
+									 <iframe width="100%"  allowtransparency="yes" marginwidth="0" marginheight="0" height="100%" style="width: 100%;height: 100%;" scrolling="no" :src="v.url" frameborder="0"></iframe>
+                </div>
+                <div class="chart-items" style="flex-wrap: wrap;">
+                  <div class="item" style="position: relative;" v-if="!v.children">
+                    <div class="no-data">
+                      暂无数据
+                    </div>
+                  </div>
+                  <div v-else class="item" :style="'min-width:'+(100/(v.w))+'%'" element-loading-background="rgba(0, 0, 0, 0)" v-for="(item,key) in v.children" style="position: relative;">
+                    <chart-item ref="chartItem" :item="item" :mid="v.id" :theme="chartTheme"></chart-item>
+                  </div>
+                </div>
+              </grid-item>
+            </grid-layout> 
+            <!-- 模块 end -->
+        </div>
+        <!-- 编辑模块 end -->
+    </div>
+    
+    <!--设置echart-->
+    <el-dialog class="page-dialog" width="92%" style="height:90%;top:5%" :visible.sync="layerDialog.show" :fullscreen="true" center>
+      <div class="page-settings">
+        <!--图表设置-->
+        <div class="tab-panel flex" v-if="layerDialog.layerTab=='1'">
+          <!-- 弹框选项卡 -->
+          <div class="panel" style="width:10%;">
+            <div class="item" :class="{'current':layerDialog.dataTab=='base_data'}" @click="dataTabEvent('base_data')">
+              <i class="iconfont icon-base-data"></i><span>基础数据</span>
+            </div>
+            <div class="item" :class="{'current':layerDialog.dataTab=='mulit_data'}"
+              @click="dataTabEvent('mulit_data')">
+              <i class="iconfont icon-compound-data"></i><span>图表数据</span>
+            </div>
+            <div class="item" :class="{'current':layerDialog.dataTab=='target_data'}"
+              @click="dataTabEvent('target_data')">
+              <i class="iconfont icon-target"></i><span>指标数据</span>
+            </div>
+          </div>
+          <!-- 选项卡对应内容 -->
+          <div class="panel" style="width:25%;display:flex;display:-webkit-flex;flex-direction: column;"
+            v-loading="treeData.loading" element-loading-text="正在加载数据"
+            element-loading-background="rgba(255, 255, 255, .9)">
+            <!-- input select -->
+            <div style="height:36px;">
+              <!-- 不是基础数据 -->
+              <div v-if="layerDialog.dataTab!='base_data'">
+                <el-select style="width:25%;" size="small" v-model="layModel.selVal" placeholder="请选择">
+                  <el-option v-for="item in layModel.list" :key="item.value" :label="item.label" :value="item.value">
+                  </el-option>
+                </el-select>
+                <el-input style="width:72%;" size="small" v-model="treeData.searchName" width="150px"
+                  placeholder="请输入数据名称">
+                  <el-button slot="append" icon="el-icon-search" @click="searchTreeName"></el-button>
+                </el-input>
+              </div>
+              <!-- 基础数据 -->
+              <div v-if="layerDialog.dataTab=='base_data'">
+                <el-select style="width:25%;" size="small" v-model="selModel.selVal" placeholder="请选择">
+                  <el-option v-for="item in selModel.list" :key="item.value" :label="item.label" :value="item.value">
+                  </el-option>
+                </el-select>
+                <el-input style="width:72%;" size="small" v-model="treeData.searchName" width="150px"
+                  placeholder="请输入数据名称">
+                  <el-button slot="append" icon="el-icon-search" @click="searchTreeName"></el-button>
+                </el-input>
+              </div>
+            </div>
+            <!-- tree -->
+            <div class="tree-box" style="flex:1;overflow-y: auto;">
+              <el-tree show-checkbox lazy node-key="id" ref="tree" :default-checked-keys="treeData.checked" :check-strictly="true" :load="lazyGetChild" :data="treeData.data" @check-change="dataTreeEvent">
+                <span slot-scope="scope">
+                  <span>
+                    <i></i>
+                    <el-tag size="mini" v-if="scope.data.my">我创建</el-tag>
+                    {{ scope.data.name }}
+                  </span>
+                </span>
+              </el-tree>
+            </div>
+            <!-- 分页 -->
+            <div class="page-box" style="height:32px; text-align: center;padding-top:4px">
+              <template>
+                <el-pagination background layout="prev, pager, next" :total="treeData.total" :current-page="treeData.pageNum" :page-size="treeData.pageSize" :pager-count="5" @current-change="changeTreePage"></el-pagination>
+              </template>
+            </div>
+            <!-- 分页 end -->
+          </div>
+          <!-- 数据展示 -->
+          <div class="panel" v-if="thisLayer.children">
+            <template v-if="thisLayer.children.length">
+              <el-tabs v-model="treeData.activeId" type="card" closable @tab-remove="tagClose" style="width:100%">
+                <el-tab-pane style="height:100%;display:flex" v-for="(item, key) in treeData.activeData" :key="key"
+                  :label="item.name" :name="item.id">
+                  <div class="chart-content">
+                    <div class="chart-items">
+                      <div class="item">
+                        <chart-item ref="chartItem" :item="thisLayer.children[key]" :mid="thisLayer.id"
+                          theme-name="default" :theme="chartTheme">
+                        </chart-item>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="chart-config">
+                    <template>
+                      <chart-options :item="thisLayer.children[key]" :module="thisLayer"></chart-options>
+                    </template>
+                  </div>
+                </el-tab-pane>
+              </el-tabs>
+            </template>
+          </div>
+
+        </div>
+        <!--图表设置 end-->
+      </div>
+    </el-dialog>
+    <!--设置echart end -->
+
+      <el-dialog title="下级数据" custom-class="drill" width="72%" :visible.sync="drillDownVisible">
+        <object type="text/html" ref="iframeDrill" :data="drillDownUrl" scrolling="no" width="100%" height="100%" frameborder="0">
+          <iframe scrolling="no" ref="iframeDrill" :src="drillDownUrl" width="100%" height="100%" frameborder="0">
+            您的浏览器暂不支持预览，我们推荐使用 谷哥、360浏览器(急速模式)、火狐等主流浏览器。
+          </iframe>
+        </object>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="drillDownVisible = false" size="small">取 消</el-button>
+        </div>
+      </el-dialog>
+
+    </div>
+</section>
+</body>
+<style>
+.drill{
+  height: 650px; 
+}
+.drill .el-dialog__header{
+   padding: 10px 10px 10px;
+}
+.drill .el-dialog__body{
+    height: 85%;
+    width: 100%;
+    padding: 5px 5px;
+}
+.drill .el-dialog__headerbtn {
+    top: 10px;
+    right: 15px;
+}
+</style>
+<script src="js/components/chart-item.js"></script>
+<script src="js/components/chart-options.js"></script>
+<script src="js/components/chart-theme.js"></script>
+<script>
+  var vm = new Vue({
+    el: '#view',
+    data: {
+      isEdit: false,
+      title: '',
+      cockitId: '',
+      selectFuncId: '',
+      selectFuncName: '',
+      drillDownVisible:false,
+      drillDownUrl:'',
+      chartTheme: {},
+      noCentontShow: false,
+      pageLayout: {
+        loading: true,
+        children: []
+      },
+      thisLayer: {},
+      menuList: [],
+      treeData: {
+        searchName: '',
+        loading: true,
+        data: [],
+        activeData: [],
+        activeId: [],
+        checked: [],
+        pageSize: 20,
+        pageNum: 1,
+        total: 0,
+        pagerCount: 5
+      },
+      layerDialog: {
+        show: false,
+        layerTab: '1',
+        dataTab: 'base_data',
+      },
+      roleValue: '',
+      selModel: {
+        list: [{
+            value: '1',
+            label: '名称'
+          },
+          {
+            value: '2',
+            label: '组织'
+          },
+        ],
+        selVal: '1',
+      }, //1:学校，2:专业，3:课程，4:老师，5:学生
+      layModel: {
+        list: [{
+            value: '1',
+            label: '学校'
+          },
+          {
+            value: '2',
+            label: '专业'
+          },
+          {
+            value: '3',
+            label: '课程'
+          },
+          {
+            value: '4',
+            label: '老师'
+          },
+          {
+            value: '5',
+            label: '学生'
+          },
+        ],
+        selVal: '1',
+      },
+      cockitRoles: [],
+      selectedCockitRole: [], //级联查询值
+
+    },
+    components: {
+      'grid-layout': VueGridLayout.GridLayout,
+      'grid-item': VueGridLayout.GridItem
+    },
+    mounted: function () {
+      this.chartTheme = chartTheme
+      this.getRoles();
+    },
+    methods: {
+      //级联查询
+      handleRoleChange : function(val) {
+          this.cockitId = val[0];
+          this.roleValue = val[1];
+          this.getMenuList(); //切换
+      },
+      //获取驾驶舱授权角色
+      getRoles: function () {
+          var _this = this;
+          _this.pageLayout.loading = true
+          api.getMyCockpit().then(function(res){
+              if (res.data.data && Object.keys(res.data.data).length != 0) {
+                  _this.cockitRoles = res.data.data;
+                  var cockitId = res.data.data[0].value;
+                  var roleId = res.data.data[0].children[0].value;
+                  _this.selectedCockitRole = [cockitId, roleId];
+                  _this.title = res.data.data[0].label;
+                  _this.cockitId = cockitId;
+                  _this.roleValue = roleId;
+                  _this.getMenuList(); //加载菜单
+                  _this.noCentontShow = false;
+              } else {
+                  _this.noCentontShow = true;
+              }
+              _this.pageLayout.loading = false
+          });
+      },
+      //下钻跳转
+      goUrl: function (mutiId,baseId,moduleId,queryWord,type) {
+          this.drillDownUrl = ('/static/dragging/drill.html?baseId=' + baseId + '&moduleId=' + moduleId + '&queryWord=' + queryWord + '&type=' + type);
+          this.drillDownVisible = true
+      },
+      //弹框数据选择
+      dataTabEvent: function (i) {
+          this.layerDialog.dataTab = i.toString()
+          this.treeData.pageNum = 1
+          this.getDataListByType(this.layerDialog.dataTab, 0)
+      },
+      //弹框数据树事件，回显到内容填充
+      dataTreeEvent: function (e, isChange) {
+          var _this = this
+          if (isChange) {
+              //此数据已存在，不允许重复添加
+              if (_this.treeData.checked.indexOf(e.id) >= 0) {
+                return
+              }
+              _this.treeData.checked.push(e.id)
+              _this.treeData.activeData.push(util.activeData(e.id, e.name, e.type));
+              _this.thisLayer.children = _this.treeData.activeData
+              _this.treeData.activeId = e.id
+              _this.resizeEvent(_this.thisLayer);
+          } else {
+              var index = _this.treeData.checked.indexOf(e.id)
+              if (index >= 0) {
+                _this.treeData.checked.splice(index, 1)
+                _this.treeData.activeData.splice(index, 1)
+                if (_this.treeData.activeId == e.id) {
+                  _this.treeData.activeId = _this.treeData.activeData.length ? _this.treeData.activeData[0].id : ''
+                }
+              }
+          }
+      },
+      //弹框tab标签关闭
+      tagClose: function (key) {
+          for (var i in this.treeData.activeData) {
+            if (this.treeData.activeData[i].id == key) {
+              this.treeData.activeData.splice(i, 1)
+              this.treeData.checked.splice(i)
+            }
+          }
+          if (this.treeData.checked.indexOf(this.treeData.activeId) == -1) {
+            this.treeData.activeId = this.treeData.activeData[this.treeData.activeData.length - 1].id
+          }
+      },
+      //切换维度 根据菜单ID递归查找当前菜单信息 Object.keys
+      menuEvent: function (id) {
+          var _this = this
+          _this.pageLayout.loading = true
+          let params = {
+            funcId: id,
+            cockpitId: _this.cockitId,
+            roleId: _this.roleValue,
+          }
+          api.getRecursions(params).then(function(res){
+            //功能模块基本信息
+            _this.pageLayout.children = res.data.data;
+            _this.pageLayout.loading = false
+            //控制显示
+            if (Object.keys(res.data.data).length > 0) {
+              _this.noCentontShow = false;
+            } else {
+              _this.noCentontShow = true;
+            }
+          });
+          _this.selectFuncId = id;
+          for (var i in _this.menuList) {
+            if (_this.menuList[i].funcId == id) {
+              _this.selectFuncName = _this.menuList[i].funcName
+              return
+            }
+          }
+      },
+      //获取菜单列表(功能模块)
+      getMenuList: function () {
+          var _this = this
+          var cockitId = _this.cockitId;
+          //查询驾驶舱关联的模块
+          api.getFuncList(cockitId).then(function(res){
+            if (Object.keys(res.data.data)) { //功能模块基本信息
+              _this.menuList = res.data.data;
+              if(_this.menuList==[]){
+                _this.pageLayout.loading=false
+              }
+            }
+            //默认选中首个菜单
+            if (_this.menuList.length) {
+              _this.selectFuncId = _this.menuList[0].funcId;
+              _this.selectFuncName = _this.menuList[0].funcName
+              _this.menuEvent(_this.menuList[0].funcId);
+            }
+          });
+      },
+      //弹出图层设置dialog
+      layerDialogEvent: function (item, key) {
+          this.layerDialog.show = true
+          this.treeData.checked = []
+          this.thisLayer = item
+          for (var i in this.thisLayer.children) {
+            this.thisLayer.children[i].options = util.layerOptions();
+          }
+          //数据
+          this.treeData.activeData = Object.keys(item.children).length > 0 ? item.children : []
+          if (this.treeData.activeData.length) {
+            //默认展示第一个
+            this.treeData.activeId = this.treeData.activeData[0].id
+            for (var i in this.treeData.activeData) {
+              this.treeData.checked.push(this.treeData.activeData[i].id)
+            }
+          }
+          this.treeData.loading = false
+          //请求数据
+          this.getDataListByType(this.layerDialog.dataTab, 0)
+      },
+      //创建空图层
+      createLayer: function () {
+        this.pageLayout.children.push(util.createLayer())
+      },
+      //删除图层
+      deleteLayer: function (key) {
+        this.pageLayout.children.splice(key, 1)
+      },
+      //保存页面配置
+      saveMenuPage: function () {
+        var _this = this
+        //提交信息
+        let params = {
+          funcId: _this.selectFuncId,
+          cockpitId: _this.cockitId,
+          roleId: _this.roleValue,
+          layer: JSON.stringify(_this.pageLayout.children),
+        }
+        api.saveLayers(params).then( function(data) {
+           _this.$message({message: '保存设置成功',type: 'success'});
+        });
+      },
+      //拉伸
+      resizeEvent: function (arr) {
+        for (var i in arr.children) {
+          for (var j in this.$refs.chartItem) {
+            if (this.$refs.chartItem[j].item.id == arr.children[i].id) {
+              this.$refs.chartItem[j].resizeEvent(arr.children[i].id)
+            }
+          }
+        }
+      },
+      //查询
+      searchTreeName: function () {
+        this.treeData.pageNum = 1
+        this.getDataListByType(this.layerDialog.dataTab, 0)
+      },
+      //分页
+      changeTreePage: function (num) {
+        this.treeData.pageNum = num
+        this.getDataListByType(this.layerDialog.dataTab, 0)
+      },
+      //根据数据类型获取基础数据列表
+      getDataListByType: function (type, pid) {
+        var _this = this
+        _this.treeData.loading = true
+        _this.layerDialog.dataTab = type
+        var params = {
+          type: type,
+          name: _this.treeData.searchName,
+          parentId: 0,
+          pageSize: _this.treeData.pageSize,
+          pageNum: _this.treeData.pageNum,
+        }
+        api.getSelectDataList(params).then(function(res) {
+            if (Object.keys(res.data.data.records).length > 0) {
+              _this.treeData.data = res.data.data.records
+              _this.treeData.pageSize = res.data.data.size
+              _this.treeData.total = res.data.data.total;
+            }
+            _this.treeData.loading = false
+        });
+      },
+      //弹框 tree 懒加载
+      lazyGetChild: function (node, resolve) {
+        var _this = this;
+        // 第一次加载时，不请求接口
+        if (node.level == 0) {
+          return;
+        }
+        if (_this.layerDialog.dataTab == 'base_data') { //基础数据
+          //_this.treeData.checked.join(',')
+          var params = {
+            type: _this.layerDialog.dataTab,
+            dataName: _this.treeData.searchName,
+            parentId: node.data.dataId,
+            checkedIds: _this.treeData.checked,
+            pageSize: _this.treeData.pageSize,
+            pageNum: _this.treeData.pageNum,
+          }
+          api.getDataBaseList(params).then(function(res) {
+            if (Object.keys(res.data.data.records).length > 0) {
+              _this.treeData.data = res.data.data.records
+              _this.treeData.pageSize = res.data.data.size
+              _this.treeData.total = res.data.data.total;
+            } else {
+              _this.$message({
+                message: '无下级数据',
+                type: 'warning'
+              });
+              _this.treeData.data = [];
+            }
+            _this.treeData.loading = false
+          })
+        }
+      },
+    }
+  })
+</script>
+</html>

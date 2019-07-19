@@ -1,0 +1,203 @@
+.top2 {
+  width: 100%;
+  display: flex;
+  align-content: flex-start; // | flex-end | center | space-between | space-around | stretch;
+  padding: 0 0.7%  0.2rem;
+  .topCard {
+    flex: 1;
+    background: #638FE6;
+    border-right:1px solid #fff;
+    color: #fff;
+    padding:1% 1%;
+    border-radius: 5px;
+    .contentotal{
+      >div{
+        display: flex;
+        flex: 1;
+        .tatle{
+          font-size: 0.2rem;
+        }
+        .proportion{
+          flex: 1;
+          font-size: 0.2rem;
+          text-align: right;
+        }
+      }
+      >.valueT{
+        font-size: 0.4rem;
+        height: 0.4rem;
+        line-height: 0.4rem;
+        text-align: left;
+      }
+    }
+  }
+  .topCard:nth-of-type(1){
+    background: #60B8F6;
+    margin-right:3%;
+  }
+  .topCard:nth-of-type(2){
+    background: #FE787A;
+    margin-right:3%;
+  }
+  .topCard:nth-of-type(3){
+    background: #EC92E0;
+    margin-right:3%;
+  }
+  .topCard:nth-of-type(4){
+    background: #FBBB6E;
+    margin-right:3%;
+  }
+}
+.top1{
+  padding-bottom: 0.2rem;
+  /*border: 1px solid red;*/
+  .topCard {
+    border-right:1px solid #fff;
+    color: #fff;
+    padding:1% 3%;
+    border-radius: 5px;
+    background: #638FE6;
+    width: 33%;
+    text-align: left;
+    .contentotal{
+      display: inline-block;
+      .tatle{
+        font-size: 0.22rem;
+      }
+      >.valueT{
+        font-size: 0.3rem;
+        text-align: left;
+      }
+    }
+  }
+}
+.selectDiv{
+  text-align: left;
+  /*border: 1px solid blue;*/
+  padding-bottom: 0.2rem;
+  >span{
+    font-size: 0.15rem;
+  }
+}
+.lineA{
+  border-bottom: 1px solid rgba(192, 192, 192, 0.58);
+}
+.divCentre{
+  .el-col-12,.el-col-24{
+    display: flex;
+    display:-webkit-flex;
+    align-items: flex-start;
+    padding-top: 0.2rem;
+    >.left{
+      width: 20%;
+      color: #777;
+      text-align: right;
+      font-size: 14px;
+      /*flex-wrap:wrap;*/
+      >h3{
+        font-size: 14px;
+      }
+    }
+    .rightP{
+      width: 80%;
+      color: #888;
+      font-size: 14px;
+      padding-left: 15px;
+      text-align:left ;
+      /*border: 1px solid red;*/
+      .text{
+        border: 1px solid #999;
+        height:1.4rem;
+        padding: 0.1rem;
+        overflow-y: auto;
+        width: 90%;
+        .file{
+          background: #f6f9ff;
+          margin-top:3px ;
+          margin-bottom:3px ;
+          display: flex;
+          .listContent{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 70%;
+            /*display: inline-block;*/
+            /*vertical-align: bottom;*/
+          }
+          .listItem{
+            color: #94c6e7;
+            font-size: 25px;
+          }
+        }
+        .listSpan{
+          padding: 0.07rem 0.2rem;
+          margin-right:0.1rem;
+          margin-bottom:0.1rem;
+          display: inline-block;
+          border: 1px solid rgba(158, 158, 158, 0.17);
+          border-radius: 3px;
+          /*display: inline-block;*/
+          /*vertical-align: bottom;*/
+        }
+        .wufile{
+          font-size: 18px;
+          color: #888;
+          text-align: center;
+          line-height:90px;
+        }
+        .fileCoent:hover{
+          background: #e0f8ff;
+        }
+      }
+    }
+  }
+  .el-col-24{
+    /*padding-top: 0.2rem;*/
+    margin-bottom: 0.2rem;
+    >.left {
+      width: 10%;
+    }
+    .rightP{
+      width: 86.2%;
+      .text{
+        width: 100%;
+        height:1.4rem;
+      }
+    }
+  }
+}
+.pageDiv{
+  margin: 0.1rem 0.42rem 0.05rem 0;
+  overflow: hidden;
+  text-align: right
+}
+//预览里面的
+.fileBox {
+  width: 100%;
+  min-height: 180px;
+  padding: 5px 30px;
+  .fileItem {
+    float: left;
+    width: 125px;
+    height: 80px;
+    margin: 5px 10px;
+    text-align: center;
+    .listItem {
+      font-size: 55px;
+      display: inline-block;
+      color: #79b4ec;
+    }
+    .listText {
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+.fileManage{
+  height: 100%;
+  .tableHeight{
+    height: 85%;
+  }
+}

@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>列表控件属性</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+    <meta name="generator" content="www.leipi.org" />
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="leipi.style.css">
+    <script type="text/javascript" src="../dialogs/internal.js"></script>
+    <script type="text/javascript" src="./jquery-1.7.2.min.js"></script>
+    <style>
+        .anly_data_table_ {
+            width: 80%;
+            height: 70px;
+            background: #50505017;
+            border: #45b1a8 2px dashed;
+            text-align: center;
+            padding-top: 50px;
+            font-size: 17px;
+        }
+    </style>
+<script type="text/javascript">
+function createElement(type, name)
+{     
+    var element = null;     
+    try {        
+        element = document.createElement('<'+type+' name="'+name+'">');     
+    } catch (e) {}   
+    if(element==null) {     
+        element = document.createElement(type);     
+        element.name = name;     
+    } 
+    return element;
+}
+</script>
+ 
+</head>
+<body>
+<div class="content">
+<form id="form1" name="form1" method="post" action="">
+    <p style="margin-left:5px;">
+        <label for="current">页码</label>
+        <input type="text" name="current" id="current" value="1" min="1" /> 
+        <span style="color:#a78712;">说明！现阶段诊断结果报告是根据个人权限判定,是否有权限查看更多...</span>  
+    </p>
+    <p style="margin-left:5px;">
+        <label for="size">每页记录数</label>
+        <input type="text" name="size" id="size" max="1500" value="100" min="1" />
+        <small style="color:crimson;">小于等于1500</small>
+    </p>
+    <p style="margin-left:5px;">
+      <label for="size">表格宽度</label>
+      <input type="text" name="tableWidth" id="tableWidth" max="1500" value="80%"/>
+    </p>
+</form>
+</div>
+
+<div style="width:100%;font-size: 14px;">
+  <table width='100%'>
+    <tbody>
+       <tr class='firstRow'>
+            <td width='11%' colspan='1' rowspan='2' align='center' valign='middle' nowrap='nowrap' bgcolor='#E2E2E2'>指标名称</td>
+            <td height='27' colspan='4' rowspan='1' align='center' valign='middle' bgcolor='#E2E2E2'>目标</td>
+            <td colspan='4' align='center' valign='middle' bgcolor='#E2E2E2'>标准</td>
+            <td width='5%' align='center' valign='middle' bgcolor='#E2E2E2'>预警</td>
+            <td width='9%' rowspan='2' align='center' valign='middle' bgcolor='#E2E2E2'>初始值</td>
+            <td width='11%' rowspan='2' align='center' valign='middle' bgcolor='#E2E2E2'>当前值</td>
+       </tr>
+       <tr>
+           <td width='9%' height='25' align='center' valign='middle' nowrap='nowrap' bgcolor='#E2E2E2'>值策略</td>
+           <td width='6%' align='center' valign='middle' nowrap='nowrap' bgcolor='#E2E2E2'>权重</td>
+           <td width='11%' colspan='1' rowspan='1' align='center' valign='middle' nowrap='nowrap' bgcolor='#E2E2E2'>达标时间</td>
+           <td width='6%' align='center' valign='middle' nowrap='nowrap' bgcolor='#E2E2E2'>状态</td>
+           <td width='9%' align='center' valign='middle' nowrap='nowrap' bgcolor='#E2E2E2'>值策略</td>
+           <td width='6%' align='center' valign='middle' nowrap='nowrap' bgcolor='#E2E2E2'>权重</td>
+           <td width='11%' align='center' valign='middle' nowrap='nowrap' bgcolor='#E2E2E2'>达标时间</td>
+           <td width='6%' align='center' valign='middle' nowrap='nowrap' bgcolor='#E2E2E2'>状态</td>
+           <td align='center' valign='middle' bgcolor='#E2E2E2'>值策略</td>
+       </tr>
+       <tr>
+           <td height='33' align='center' valign='middle' nowrap='nowrap' style='word-break: break-all;'>全校师生比</td>
+         <td align='center' valign='middle' nowrap='nowrap'>≥0.17</td>
+           <td align='center' valign='middle' nowrap='nowrap' style='word-break: break-all;'>1</td>
+         <td colspan='1' rowspan='1' align='center' valign='middle' nowrap='nowrap'>2019-4-13 </td>
+         <td align='center' valign='middle' nowrap='nowrap'>达标</td>
+         <td align='center' valign='middle' nowrap='nowrap'>≥0.17</td>
+         <td align='center' valign='middle' nowrap='nowrap'>1</td>
+         <td align='center' valign='middle' nowrap='nowrap'>2019-4-13</td>
+         <td align='center' valign='middle' nowrap='nowrap'>达标</td>
+         <td align='center' valign='middle' nowrap='nowrap'>≤0.15</td>
+         <td align='center' valign='middle' nowrap='nowrap'>0.16</td>
+         <td align='center' valign='middle' nowrap='nowrap'>0.18</td>
+       </tr>
+        <tr>
+           <td height='33' align='center' valign='middle' nowrap='nowrap' style='word-break: break-all;'>全校wifi覆盖</td>
+         <td align='center' valign='middle' nowrap='nowrap'>是</td>
+           <td align='center' valign='middle' nowrap='nowrap' style='word-break: break-all;'>1</td>
+         <td colspan='1' rowspan='1' align='center' valign='middle' nowrap='nowrap'>2018-4-01 </td>
+         <td align='center' valign='middle' nowrap='nowrap'>达标</td>
+         <td align='center' valign='middle' nowrap='nowrap'>是</td>
+         <td align='center' valign='middle' nowrap='nowrap'>1</td>
+         <td align='center' valign='middle' nowrap='nowrap'>2018-4-01</td>
+         <td align='center' valign='middle' nowrap='nowrap'>达标</td>
+         <td align='center' valign='middle' nowrap='nowrap'>否</td>
+         <td align='center' valign='middle' nowrap='nowrap'>否</td>
+         <td align='center' valign='middle' nowrap='nowrap'>是</td>
+       </tr>
+        <tr>
+           <td height='33' align='center' valign='middle' nowrap='nowrap' style='word-break: break-all;'>国家重点课题</td>
+         <td align='center' valign='middle' nowrap='nowrap'>≥3</td>
+           <td align='center' valign='middle' nowrap='nowrap' style='word-break: break-all;'>1</td>
+         <td colspan='1' rowspan='1' align='center' valign='middle' nowrap='nowrap'>2019-4-13 </td>
+         <td align='center' valign='middle' nowrap='nowrap'>达标</td>
+         <td align='center' valign='middle' nowrap='nowrap'>≥5</td>
+         <td align='center' valign='middle' nowrap='nowrap'>1</td>
+         <td align='center' valign='middle' nowrap='nowrap'>2019-4-13</td>
+         <td align='center' valign='middle' nowrap='nowrap'>未达标</td>
+         <td align='center' valign='middle' nowrap='nowrap'>≤2</td>
+         <td align='center' valign='middle' nowrap='nowrap'>2</td>
+         <td align='center' valign='middle' nowrap='nowrap'>4</td>
+       </tr>
+        <tr>
+           <td height='33' align='center' valign='middle' nowrap='nowrap' style='word-break: break-all;'>省优秀教师比例</td>
+         <td align='center' valign='middle' nowrap='nowrap'>≥0.2</td>
+           <td align='center' valign='middle' nowrap='nowrap' style='word-break: break-all;'>1</td>
+         <td colspan='1' rowspan='1' align='center' valign='middle' nowrap='nowrap'>2019-4-13 </td>
+         <td align='center' valign='middle' nowrap='nowrap'>达标</td>
+         <td align='center' valign='middle' nowrap='nowrap'>≥0.2</td>
+         <td align='center' valign='middle' nowrap='nowrap'>1</td>
+         <td align='center' valign='middle' nowrap='nowrap'>2019-4-13</td>
+         <td align='center' valign='middle' nowrap='nowrap'>达标</td>
+         <td align='center' valign='middle' nowrap='nowrap'>≤0.1</td>
+         <td align='center' valign='middle' nowrap='nowrap'>0.17</td>
+         <td align='center' valign='middle' nowrap='nowrap'>0.25</td>
+       </tr>
+        <tr>
+           <td height='33' align='center' valign='middle' nowrap='nowrap' style='word-break: break-all;'>教师论文数</td>
+         <td align='center' valign='middle' nowrap='nowrap'>≥20</td>
+           <td align='center' valign='middle' nowrap='nowrap' style='word-break: break-all;'>0.8</td>
+         <td colspan='1' rowspan='1' align='center' valign='middle' nowrap='nowrap'>2019-4-13 </td>
+         <td align='center' valign='middle' nowrap='nowrap'>达标</td>
+         <td align='center' valign='middle' nowrap='nowrap'>≥18</td>
+         <td align='center' valign='middle' nowrap='nowrap'>1</td>
+         <td align='center' valign='middle' nowrap='nowrap'>2019-4-13</td>
+         <td align='center' valign='middle' nowrap='nowrap'>达标</td>
+         <td align='center' valign='middle' nowrap='nowrap'>≤15</td>
+         <td align='center' valign='middle' nowrap='nowrap'>17</td>
+         <td align='center' valign='middle' nowrap='nowrap'>19</td>
+       </tr>
+    </tbody>
+  </table>
+</div>   
+
+<script type="text/javascript">
+var oNode = null,thePlugins = 'diagnosis-results';
+
+window.onload = function() {
+    //弹出窗口初始化函数，这里主要是判断是编辑下拉列表还是新增
+    if( UE.plugins[thePlugins].editdom ){
+        oNode = UE.plugins[thePlugins].editdom;
+        $G('current').value = oNode.getAttribute('current');
+        $G('size').value = oNode.getAttribute('size');
+        $G('tableWidth').value = oNode.getAttribute('t-width');
+    }
+}
+
+//取消按钮
+dialog.oncancel = function () {
+	if(UE.plugins[thePlugins].editdom){
+		delete UE.plugins[thePlugins].editdom;
+	}
+};
+
+//确定按钮
+dialog.onok = function (){
+    var current = $G('current').value , size=$G('size').value, tableWidth=$G('tableWidth').value;
+    if(!current) {
+        alert('页码不能为空');
+        $G('current').focus();
+        return false;
+    }
+    if(!size) {
+        alert('每页记录数不能为空');
+        $G('size').focus();
+        return false;
+    }else{
+        if(size > 1500){
+            alert('每页记录数不可超过1500');
+            $G('size').focus();
+            return false;
+        }
+    }
+    if(!tableWidth){
+        tableWidth = "80%"
+    }
+    try {
+      if(oNode) {//不为空 编辑
+          //先删除旧的
+          UE.dom.domUtils.remove(oNode,false);
+          oNode = null;//设置为null
+        }
+        var content = createStype(size,current,tableWidth);
+        editor.execCommand('insertHtml',content);
+        return true ;
+    }catch (e){
+        editor.execCommand('error');
+        return false;
+    }
+};
+
+/**
+ *  创建实例
+ */
+ function createStype(size,current,tableWidth){
+    var style ="width:"+tableWidth+";height:70px;background: #50505017;-webkit-user-select: none;-ms-user-select: none;-moz-user-select: none;-webkit-touch-callout: none;border: #45b1a8 2px dashed;text-align: center;padding-top: 50px;font-size: 17px;";
+    return "<div nzplugins='diagnosis-results' style='"+style+"'  t-width='" + tableWidth + "' class='nz_diagnostic_report_data_table' size='"+size+"' current='" + current + "'>诊断报告宏控件</div>"
+}
+</script>
+</body>
+</html>

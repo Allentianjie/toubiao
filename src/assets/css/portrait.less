@@ -1,0 +1,157 @@
+// portrait-content 画像样式
+// tieme: 2019年5月10日10:36:07
+// remark: 综合概况、任务指标  - S
+// @import './jianzhi_initi.less';   // 新增弹框格式化样式
+
+.portrait-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 10px;
+
+  .no-data {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .item {
+    width: 25%;
+    height: 185px;
+    padding: 10px;
+
+    .item-con {
+      height: 100%;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .item-body {
+        flex: 1;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        h3 {
+          color: #fff;
+          //text-align: center;
+        }
+      }
+
+      .item-foot {
+        width: 100%;
+        height: 50px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        p {
+          height: 100%;
+          font-size: 16px;
+          line-height: 50px;
+          text-align: center;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+
+
+  .item.w20 {
+    width: 20%;
+  }
+
+  // 带有图片背景的 项
+  .item.bg-img {
+    .item-body {
+      background-image: url(~@/assets/images/img/circle1.png);
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+  }
+
+  // 背景是颜色的项
+  .item.bg-color {
+    .item-con{
+      border-radius: 6px;
+
+      .item-body {
+        background-color: #f0f4ff;
+
+        h3 {
+          color: #de9d11;
+          font-size: 0.3rem;
+          font-weight: bold;
+          text-align: center;
+        }
+      }
+      .item-foot {
+        background-color: #2a84dc;
+
+        p {
+          color: #fff;
+          font-weight: bold;
+          padding:0 5px;
+        }
+      }
+    }
+  }
+
+  // 背景图片
+  .item.bg-img:nth-child(2) {
+    .item-body {
+      background-image: url(~@/assets/images/img/circle2.png);
+    }
+  }
+  .item.bg-img:nth-child(3) {
+    .item-body {
+      background-image: url(~@/assets/images/img/circle3.png);
+    }
+  }
+  .item.bg-img:nth-child(4) {
+    .item-body {
+      background-image: url(~@/assets/images/img/circle4.png);
+    }
+  }
+  .item.bg-img:nth-child(5) {
+    .item-body {
+      background-image: url(~@/assets/images/img/circle5.png);
+    }
+  }
+  .item.bg-img:nth-child(6) {
+    .item-body {
+      background-image: url(~@/assets/images/img/circle6.png);
+    }
+  }
+  .item.bg-img:nth-child(7) {
+    .item-body {
+      background-image: url(~@/assets/images/img/circle7.png);
+    }
+  }
+  .item.bg-img:nth-child(8) {
+    .item-body {
+      background-image: url(~@/assets/images/img/circle8.png);
+    }
+  }
+  .item.bg-img:nth-child(9) {
+    .item-body {
+      background-image: url(~@/assets/images/img/circle1.png);
+    }
+  }
+  .item.bg-img:nth-child(10) {
+    .item-body {
+      background-image: url(~@/assets/images/img/circle2.png);
+    }
+  }
+}
+//   - E

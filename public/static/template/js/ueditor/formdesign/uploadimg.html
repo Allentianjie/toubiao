@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="generator" content="www.leipi.org" />
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <script type="text/javascript" charset="utf-8" src="../../jquery-1.7.2.min.js?2023"></script>
+    <script type="text/javascript" charset="utf-8" src="../../../../dragging/js/vue/vue.js"></script>
+    <!--babel兼容-->
+    <script type="text/javascript" charset="utf-8" src="../../../../dragging/js/polyfill.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../../../../dragging/js/vue/element.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../../../../dragging/js/jquery/axios.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../../../../dragging/js/bluebird.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../../../../dragging/js/util.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../../../api/index.js?2023"></script>
+    <script type="text/javascript" src="../dialogs/internal.js"></script>
+    <style>
+        .well {
+
+            min-height: 20px;
+            margin-bottom: 10px;
+            background-color: #fff;
+            box-shadow: none;
+            padding: 19px;
+            border-width: 0px;
+            border-style: none;
+            border-color: none;
+            border-image: initial;
+            border-radius: 0px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="well">
+        <input type="file" name="file" id="file" accept="image/*" />
+        <button style="float: right;" onclick="submitForm()">提交</button>
+    </div>
+    <script type="text/javascript">
+        var oNode = null, thePlugins = 'uploadimg';
+        window.onload = function () {
+            if (UE.plugins[thePlugins].editdom) {
+                oNode = UE.plugins[thePlugins].editdom;
+            }
+        }
+
+        //取消触发
+        dialog.oncancel = function () {
+            if (UE.plugins[thePlugins].editdom) {
+                delete UE.plugins[thePlugins].editdom;
+            }
+        };
+
+        //确定按钮触发
+        function submitForm() {
+            let value = $('#file').val();
+            if (!value) {
+                alert('请上传图片文件~');
+                return
+            }
+            let param = new FormData(); //创建form对象
+            param.append('file', $('#file')[0].files[0]);//通过append向form对象添加数据
+            http.ueditorUpload(param).then(function (response) {
+                if (response.data.data) {
+                    let uuid = response.data.data.uuid;
+                    let name = response.data.data.name;
+                    let path = response.data.data.path;
+                    editor.execCommand('insertHtml', getImg(path, uuid, name));
+                    dialog.close(true);
+                } else {
+                    alert('图片上传失败:' + response.data.msg);
+                }
+            })
+        }
+
+        /**
+         * html
+         */
+        function getImg(path, uuid, alt) {
+            return "<img nzplugins='uploadimg' class='nz_base_data_uploadimg' src='" + getHost(path) + "' uuid='" + uuid + "' alt='" + alt + "'>"
+        }
+        /**
+         * 获取服务器地址 
+         */
+        function getHost(path) {
+            var host = path.substring(0, path.indexOf(":"));
+            if (!host || host.length == 0) {
+                var location = window.location.host;
+                location = location.replace(':' + window.location.port, '');
+                path = (location + path);
+            }
+            return window.location.protocol + "//" + path;
+        }
+    </script>
+</body>
+
+</html>

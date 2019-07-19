@@ -1,0 +1,349 @@
+@import 'common/_var';
+@import 'common/_mixins';
+
+// collegs 学院
+.collegeLq{
+  padding: 15px 1% 0;
+  overflow: hidden;
+}
+.gc-college {
+    position: relative;
+    width: 100%;
+    height: ~'calc(100vh - 100px)';
+    padding: 15px 15px 0 15px;
+    //overflow: hidden;
+    //background:#e5ecfa ;
+  //background:red ;
+    .display-flex();
+    &__hd {
+        width: 25%;
+        height: 100%;
+        margin-right: 1%;
+        //background:rgba(255,255,255,1);
+      //background:#e5ecfa ;
+      //background:red ;
+        &--block {
+            position: relative;
+            margin-bottom: 20px;
+            background:rgba(255,255,255,1);
+            //background:blue;
+            //box-shadow: 0 0 9px 0 rgba(153,153,153,0.75);
+            &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: -8px;
+                width: 140px;
+                height: 8px;
+                pointer-events: none;
+                background: url(~@/assets/img/home-line.png) center no-repeat;
+                background-size: cover;
+            }
+        }
+        &--normal {
+            height: ~'calc((100% - 35px) / 2)';
+        }
+        &--total {
+            height: ~'calc(100% - 185px)';
+        }
+        &--min {
+            height: 150px;
+        }
+        &--mask {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            .display-flex();
+            justify-content: center;
+            align-items: center;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.5);
+            &:hover{
+                background: rgba(0, 0, 0, 0.6);
+            }
+        }
+    }
+    &__bd {
+        width: ~'calc(50% - 20px)';
+    }
+    &__ft {
+        width: 25%;
+        margin-left: 1%;
+        //background:rgba(255,255,255,1);
+      //background:red ;
+    }
+}
+
+// capital 师资
+.gc-capital {
+    position: relative;
+    width: 100%;
+    height: ~'calc(100vh)';
+    .display-flex();
+    font-size: @--size-base - 2;
+    &__hd {
+        width: 25%;
+        height: 100%;
+        margin-right: 20px;
+        background:rgba(255,255,255,1);
+
+        &--block {
+            position: relative;
+            margin-bottom: 20px;
+            background:rgba(255,255,255,1);
+            box-shadow: 0 0 9px 0 rgba(153,153,153,0.75);
+            &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: -8px;
+                width: 140px;
+                height: 8px;
+                pointer-events: none;
+                background: url(~@/assets/img/home-line.png) center no-repeat;
+                background-size: cover;
+            }
+
+        }
+        &--normal {
+            height: ~'calc((100% - 20px) / 2)';
+        }
+        &--total {
+            height: ~'calc(100% - 240px)';
+        }
+        &--flex {
+            .display-flex();
+            align-items: center;
+            justify-content: space-between;
+            height: 220px;
+            .flex-item {
+                width: ~'calc((100% - 20px) / 2)';
+                height: 100%;
+            }
+            .gc-capital__hd--block {
+                margin-bottom: 0;
+            }
+        }
+        &--mask {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            .display-flex();
+            justify-content: center;
+            align-items: center;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.5);
+            &:hover{
+                background: rgba(0, 0, 0, 0.6);
+            }
+        }
+    }
+    &__bd {
+        width: ~'calc(50% - 40px)';
+    }
+    &__ft {
+        width: 25%;
+        margin-left: 20px;
+        background:rgba(255,255,255,1);
+    }
+}
+
+// teams 师生
+.gc-teams {
+    position: relative;
+    width: 100%;
+    height: ~'calc(100vh - 100px)';
+    .display-flex();
+    font-size: @--size-base - 2;
+    &__hd {
+        width: 25%;
+        height: 100%;
+        margin-right: 20px;
+        //background:rgba(255,255,255,1);
+      //background: red;
+        &--block {
+            position: relative;
+            margin-bottom: 20px;
+            background:rgba(255,255,255,1);
+
+            box-shadow: 0 0 9px 0 rgba(153,153,153,0.75);
+            &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: -8px;
+                width: 140px;
+                height: 8px;
+                pointer-events: none;
+                background: url(~@/assets/img/home-line.png) center no-repeat;
+                background-size: cover;
+            }
+        }
+        &--normal {
+            height: ~'calc((100% - 35px) / 2)';
+        }
+        &--total {
+            height: ~'calc(100% - 230px)';
+        }
+        &--flex {
+            .display-flex();
+            align-items: center;
+            justify-content: space-between;
+            height: 196px;
+            margin-bottom: 20px;
+            .flex-item {
+                position: relative;
+                .box-flex(1);
+                height: 100%;
+                background:rgba(255,255,255,1);
+                box-shadow: 0 0 9px 0 rgba(153,153,153,0.75);
+                &:nth-child(1) {
+                    .flex-item__line {
+                        .linear-gradient(right, rgba(204,155,50,1), rgba(242,210,140,1));
+                    }
+                }
+                &:nth-child(2) {
+                    margin: 0 15px;
+                    .flex-item__line {
+                        .linear-gradient(right, rgba(98,147,241,1),rgba(116,186,235,1));
+                    }
+                }
+                &:nth-child(3) {
+                    .flex-item__line {
+                        .linear-gradient(right, rgba(99,182,77,1),rgba(126,234,97,1));
+                    }
+                }
+                &__line {
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    top: -8px;
+                    height: 8px;
+                }
+            }
+            & + .gc-teams__hd--block {
+                margin-bottom: 0;
+            }
+        }
+        &--mask {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            .display-flex();
+            justify-content: center;
+            align-items: center;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.5);
+            &:hover{
+                background: rgba(0, 0, 0, 0.6);
+            }
+        }
+    }
+    &__bd {
+        width: ~'calc(50% - 40px)';
+        margin-top: 0.1rem;
+    }
+    &__ft {
+        width: 25%;
+        margin-left: 20px;
+        //background:rgba(255,255,255,1);
+    }
+}
+
+// cost 经费
+.gc-cost {
+    position: relative;
+    width: 100%;
+    height: ~'calc(100vh - 100px)';
+    padding: 15px 15px 0 15px;
+    .display-flex();
+    flex-direction: column;
+    &__hd {
+        .display-flex();
+        width: 100%;
+        height: 130px;
+        background:rgba(255,255,255,1);
+        &--block {
+            position: relative;
+            .box-flex(1);
+            height: 130px;
+            margin-left: 20px;
+            background-size: 100% 100%;
+            &:first-child {
+                margin-left: 0;
+                background: url(~@/assets/img/home-cost_01.png) no-repeat;
+            }
+            &:nth-child(2) {
+                background: url(~@/assets/img/home-cost_02.png) no-repeat;
+            }
+            &:nth-child(3) {
+                background: url(~@/assets/img/home-cost_03.png) no-repeat;
+            }
+            &:last-child {
+                background: url(~@/assets/img/home-cost_04.png) no-repeat;
+            }
+        }
+        &--mask {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            .display-flex();
+            justify-content: center;
+            align-items: center;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.5);
+            &:hover{
+                background: rgba(0, 0, 0, 0.6);
+            }
+        }
+    }
+    &__bd,
+    &__ft {
+        .box-flex(1);
+        .display-flex();
+        align-items: flex-start;
+        width: 100%;
+        .item-block {
+            position: relative;
+            .box-flex(1);
+            height: 100%;
+            background:rgba(255,255,255,1);
+            box-shadow: 0 0 9px 0 rgba(153,153,153,0.75);
+            & + .item-block {
+                margin-left: 20px;
+            }
+            &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: -8px;
+                width: 140px;
+                height: 8px;
+                pointer-events: none;
+                background: url(~@/assets/img/home-line.png) center no-repeat;
+                background-size: cover;
+            }
+        }
+        &--mask {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            .display-flex();
+            justify-content: center;
+            align-items: center;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.5);
+            &:hover{
+                background: rgba(0, 0, 0, 0.6);
+            }
+        }
+    }
+    &__bd {
+        margin: 20px 0;
+    }
+}

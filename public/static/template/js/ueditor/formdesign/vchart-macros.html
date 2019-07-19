@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>数据采集平台-迈越科技</title>
+	<meta name="description" content="数据采集平台0801">
+	<meta name="key名称s" content="index">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<meta name="apple-mobile-web-app-title" content="Amaze UI" />
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+	<!--<link rel="shortcut icon" href="./assets/img/lzzy.ico" />-->
+	<script src="bootstrap/js/jquery.min.js"></script>
+	<script src="v-chart/vue.js"></script>
+	<script src="v-chart/echarts.min.js"></script>
+	<script src="v-chart/v-echarts.js"></script>
+	<!-- 词云图依赖 -->
+	<script src="v-chart/echarts-wordcloud.min.js"></script>
+	<script type="text/javascript" src="../dialogs/internal.js"></script>
+
+	<style>
+		.form-group {
+			margin-left: 8px;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<form class="form-inline">
+			<button type="button" style="margin:2px;" class="btn btn-default">选择图形</button>
+			ID名称<span class="label label-important" style="background:none;color:#de0b0b;font-size:16px;">*</span>:
+			<input type="text" id="chartId" placeholder="必填" style="width:90px;">
+			宽度: <input type="text" id="chartWidth" value="400" placeholder="宽度,默认400" style="width:90px;">
+			高度: <input type="text" id="chartHeight" value="400" placeholder="高度,默认400" style="width:90px;">
+			<iframe src="/vchart-data.html" width="98%" height="380" style="border:none;padding:6px;" scrolling="no"></iframe>
+			<textarea class="form-control" style="width:85%;margin-left:7%;" id="exampleInputEmail2" placeholder="给这个图表说点什么吧~"></textarea>
+		</form>
+	</div>
+
+	<script type="text/javascript">
+		var oNode = null, thePlugins = 'vchart-macros';
+		window.onload = function () {
+			if (UE.plugins[thePlugins].editdom) {
+				//获取实例
+				oNode = UE.plugins[thePlugins].editdom;
+				var gWidth = oNode.getAttribute('width');
+				var gHeight = oNode.getAttribute('height');
+				//属性
+				$G('chartWidth').value = gWidth;
+				$G('chartHeight').value = gHeight;
+			}
+		}
+		//取消触发
+		dialog.oncancel = function () {
+			if (UE.plugins[thePlugins].editdom) {
+				delete UE.plugins[thePlugins].editdom;
+			}
+		};
+		//确定按钮触发
+		dialog.onok = function () {
+			var gWidth = $G('chartWidth').value, gHeight = $G('chartHeight').value, gChartId = $G('chartId').value;
+			if (gChartId == '') {
+				alert('ID名称不能为空');
+				return false;
+			}
+			if (oNode) {//不为空 编辑
+				//先删除旧的
+				UE.dom.domUtils.remove(oNode, false);
+				oNode = null;//设置为null
+			}
+			//创建新的
+			var chartNode = createChart(gHeight, gWidth, thePlugins);
+			//插入
+			editor.execCommand('insertHtml', chartNode.outerHTML);
+			return true;
+		};
+
+		/**
+		 *  创建实例
+		 */
+		function createChart(chartHeight, chartWidth, thePlugins) {
+			var oNode = new Object();
+			oNode = createElement('object', 'vchartUrl');
+			oNode.setAttribute('height', chartHeight);
+			oNode.setAttribute('width', chartWidth);
+			oNode.setAttribute('data', 'http://localhost:8080/ue/js/ueditor/formdesign/echart.html');
+			oNode.setAttribute('scrolling', 'no');
+			oNode.setAttribute('frameborder', '0');
+			oNode.setAttribute('align', '');
+			oNode.setAttribute('type', 'text/html');
+			oNode.setAttribute('mynzplugins', thePlugins);
+			return oNode;
+		}
+		/** 
+		 * 创建节点 
+		 */
+		function createElement(type, name) {
+			var element = null;
+			try {
+				element = document.createElement('<' + type + ' name="' + name + '">');
+			} catch (e) { }
+			if (element == null) {
+				element = document.createElement(type);
+				element.name = name;
+			}
+			return element;
+		}
+	</script>
+
+</body>
+</html>

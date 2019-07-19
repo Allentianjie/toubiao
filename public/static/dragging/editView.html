@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="./css/element.css" />
+    <link rel="stylesheet" type="text/css" href="./css/base.css" />
+    <link rel="stylesheet" type="text/css" href="./css/index.css" />
+    <script src="./js/jquery/axios.min.js"></script> 
+    <script src="./js/jquery/jquery.js"></script>
+    <!-- vue -->
+    <script src="./js/vue/vue.js"></script>
+    <script src="./js/vue/element.js"></script>
+    <script src="./js/vue/vue-grid-layout.min.js"></script>
+    <script src="./js/vue/vue-drag-resize.js"></script>
+  
+	<!--[if IE]> 
+		<script src="./js/polyfill.min.js"></script>
+	    <script src="./js/bluebird.min.js"></script>
+	<![endif]-->
+	
+    <!-- 百度 echarts -->
+    <script src="./js/echarts/echarts.min.js"></script>
+    <script src="./js/echarts/dark.js"></script>
+    <script src="./js/echarts/v-echarts.js"></script>
+    <script src="./js/chartTypes.js"></script>
+    <!-- other   -->
+    <script src="./js/util.js"></script>
+    <script src="./api/index.js"></script>
+</head>
+<body>
+    <section id="view" v-cloak>
+        <div style="width:100%;height:100%;">
+            <el-tabs v-model="activeName" @tab-click="handleClick">
+                <el-tab-pane label="折线图" name="line"></el-tab-pane>
+                <el-tab-pane label="柱状图" name="histogram"></el-tab-pane>
+                <el-tab-pane label="条形图" name="bar"></el-tab-pane>
+                <el-tab-pane label="饼图" name="pie"></el-tab-pane>
+                <el-tab-pane label="环图" name="ring"></el-tab-pane>
+                <el-tab-pane label="瀑布图" name="waterfall"></el-tab-pane>
+                <el-tab-pane label="漏斗图" name="funnel"></el-tab-pane>
+                <el-tab-pane label="雷达图" name="radar"></el-tab-pane>
+            </el-tabs>
+            <chart-view v-if="isShow" ref="chartView" :item="item" :theme="item.chartTheme"></chart-view>
+            <el-alert v-if="!isShow" type="warning" closable="false" description="无数据" show-icon></el-alert>
+        </div>
+    </section>
+</body>
+<script src="js/components/chart-view.js"></script>
+<script src="js/components/chart-options.js"></script>
+<script src="js/components/chart-theme.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#view',
+        data: {
+            loading: false,
+            isShow: false,
+            activeName: 'pie',
+            item: {
+                markLine: false,
+                markPoint: false,
+                toolbox: {},
+                chartStack: false,
+                chartTheme: {},
+                chartName: 'test',
+                chartRefId: '11111',
+                settings: {
+                    dataName: [],
+                    seriesMap: []
+                },
+                options: {},
+                chartData: {}
+            },
+            chartEvents: {
+                click: function(e) {
+
+                }.bind(this)
+            },
+        },
+        components: {
+            'grid-layout': VueGridLayout.GridLayout,
+            'grid-item': VueGridLayout.GridItem
+        },
+        mounted: function() {
+            this.ajaxGet(); //请求数据
+            this.getChartType();
+        },
+        created: function() {
+
+        },
+        methods: {
+            //获取数据
+            ajaxGet: function() {
+                var that = this;
+                var fromStr = this.getUrlStr('from');
+                var from = eval('(' + fromStr + ')');
+                that.isShow = false;
+                that.item.chartData = [];
+                var data = {
+                        details: JSON.stringify(from.details),
+                        legendInv: from.legendInv, // 图例反转模式
+                        combinaeOrg: from.combinaeOrg, // 标签聚合模式
+                        aggrFunc: from.aggrFunc, // 聚合函数图例
+                        aggrParams: from.aggrParams, // 聚合函数图例限制参数
+                        aggrType: from.aggrType, // 聚合函数图例类型
+                        condUnion: from.condUnion // 查询条件取值
+                }
+
+                console.log(data);
+
+                //请求数据
+                api.getEditViewChartData(data).then(function(result){
+                    console.log(result.data.code);
+                    if (result.data.code == 0 && result.data.data) {
+                        if (result.data.data.rows.length > 0) {
+                            that.item.chartData = result.data.data;
+                            that.isShow = true;
+                        } else {
+                            that.isShow = false;
+                        }
+                    }
+                });
+            },
+            //图表切换
+            handleClick: function(tab, event) {
+                this.getChartType();
+            },
+            getChartType: function() {
+                var type = ChartType.get(this.activeName);
+                this.item.settings = type.settings;
+                this.item.options = type.options;
+            },
+            getUrlStr: function(name) {
+                var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
+                var r = window.location.search.substr(1).match(reg)
+                if (r != null) return unescape(r[2])
+                return null
+            },
+        }
+    })
+</script>
+
+</html>

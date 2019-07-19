@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+    <title>质量分析报告模板</title>
+    <meta name="keyword" content="maiyue">
+    <meta name="description" content="">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="author" content="leipi.org">
+    <link rel="stylesheet" type="text/css" href="../dragging/css/element.css" />
+ </head>
+<style type="text/css">
+ .footer{
+     bottom:0;
+     width:100%;
+     height:30px;
+     margin-top:5px;
+     background-color:#c7c5c521;
+     text-align: center;
+}
+.button_my{
+    width: 120px;
+    height: 30px;
+}
+</style>
+<body>
+<section id="view" v-cloak>
+    <div v-loading="loading" class="container" id="main_content" style="min-height: 600px;margin-top:10px;padding-left:10%;padding-right:10%;"></div>
+</section>
+<script type="text/javascript" charset="utf-8" src="js/jquery-1.7.2.min.js?2023"></script>
+<script type="text/javascript" charset="utf-8" src="../dragging/js/jquery/axios.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="../dragging/js/vue/vue.js"></script>
+<script type="text/javascript" charset="utf-8" src="../dragging/js/vue/element.js"></script>
+<script type="text/javascript" charset="utf-8" src="../dragging/js/util.js"></script>
+<script type="text/javascript" charset="utf-8" src="api/index.js?2023"></script>
+<script type="text/javascript">
+var vm = new Vue({
+    el: '#view',
+    data: {
+        loading: true,
+        templateId:util.urlStr('templateId'),
+    },
+    mounted () {
+        this.init();
+    },
+    methods: {
+        init(){
+            var that = this;
+            that.loading = true;
+            http.getById(that.templateId).then(response => {
+                if(response.data.data && response.data.data.tempContent){
+                    $('#main_content').html(response.data.data.tempContent);
+                }else{
+                    $('#main_content').html('暂无数据~');
+                }
+                that.loading = false;
+            });
+        },
+    }
+});
+</script>
+</body>
+</html>

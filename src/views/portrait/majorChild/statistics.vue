@@ -1,0 +1,62 @@
+<template>
+  <div class="portrait-content">
+    <div class="no-data" v-if="!propData.length">暂无数据</div>
+    <div v-else class="item bg-img"
+         :class="propData.length > 8 ? 'w20': '' "
+         v-for="item in propData"
+         :key="item.name"
+         @click="detailsClick(item)">
+      <div class="item-con">
+        <div class="item-body">
+          <h3>{{ item.value }}</h3>
+        </div>
+        <div class="item-foot">
+          <el-tooltip effect="dark" :content="item.name">
+            <p>{{ item.name }}</p>
+          </el-tooltip>
+        </div>
+      </div>
+    </div>
+    <PortraitDetails :indicatorItem="indicatorItem"></PortraitDetails>
+  </div>
+</template>
+
+<script>
+  /**
+   * 整改代码：
+   *   Evua Huang
+   *   2019-05-09
+   */
+  import PortraitDetails from "./../component/portraitDetails.vue";
+  export default {
+    components: {PortraitDetails},
+    props: ['propData'],
+    data() {
+      return {
+        indicatorItem: {
+          flag: 3, // 1学生 2老师 3专业 4课程
+          item: "",
+          show: false
+        }
+      };
+    },
+    methods: {
+      //详情点击
+      detailsClick(item) {
+        if ( item.id == "") {
+          this.$message({
+            message: '暂无详情数据',
+            type: 'warning'
+          });
+          return
+        }
+        let indicator = {
+          flag: 3,
+          item: item,
+          show: true
+        }
+        this.indicatorItem = indicator
+      }
+    }
+  };
+</script>

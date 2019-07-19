@@ -1,0 +1,459 @@
+.moduleDiv{
+  height: 100%;
+  overflow:hidden;
+  >div:last-child{
+    height:calc(100% - 33px);
+  }
+}
+.mapUpDiv{
+  //cursor: pointer;
+  height: 100%;
+  overflow:hidden;
+  >div:last-child{
+    height:calc(100% - 80px);
+  }
+}
+.titleDiv{
+    >h3{
+      background-size:100% 100% ;
+      background-repeat:no-repeat;
+      display: inline-block;
+      color: #555;
+      padding: 6px 30%;
+      font-size: 0.21rem;
+    }
+  }
+.mapSign{
+  .mapDiv{
+    display: flex;
+    width: 100%;
+    //padding-left: 10%;
+    align-items: flex-start;
+    margin-top: 0.13rem;
+    justify-content: center;
+    .name{
+      //border: 1px solid blue;
+      font-size: 0.25rem;
+      color: #fff;
+      margin-right: 2%;
+    }
+    >div{
+      display: flex;
+      align-items: flex-end;
+      .val{
+        font-size: 0.4rem;
+        background-image: url("../../../../assets/images/ledDriver/kuangyangshi.png");
+        background-size:100% 100%;
+        //background-position: center top;
+        background-repeat: no-repeat;
+        color: #f35a24;
+        padding: 2px 0.17rem;
+        margin: 0 2px;
+      }
+      .unit{
+        border: #fff;
+        font-size: 0.13rem;
+        color: #fff;
+      }
+    }
+
+
+  }
+}
+.leftUpList{
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-right: 5px;
+  >div{
+    width: 100%;
+    height: 100%;
+    >.list{
+      width: 100%;
+      background: #419E71;
+      margin-bottom: 1%;
+      display: flex;
+      padding: 0 2%;
+      height: 9.8%;
+      align-items:center;
+      cursor: pointer;
+      .name{
+        flex: 1;
+        text-align: left;
+        color: #eee;
+        font-size: 0.18rem;
+      }
+      .val{
+        color: #8FF7EA;
+      }
+    }
+    >.list:nth-of-type(1){
+      .val{
+        color: #E0F283;
+      }
+    }
+    >.list:nth-of-type(2){
+      .val{
+        color: #E8B927;
+      }
+    }
+    >.list:last-child{
+      margin-bottom: 0;
+    }
+  }
+
+}
+.rightBottomList{
+  .top{
+    display: flex;
+    width: 100%;
+    height: 40%;
+    .bigDiv{
+     flex: 0 0 33%;
+     padding: 10px;
+      height: 100%;
+      cursor: pointer;
+      >.bigDiv_Div{
+        display: flex;
+        //height: 100%;
+        justify-content:center;
+        align-items:center;
+        border-radius: 50%;
+        width: 1.12rem;
+        height: 1.12rem;
+        .circle{
+          //border: 1px solid white;
+          margin-top: 12%;
+          .topName{
+            color: #fff;
+            font-size: 0.18rem;
+          }
+          .topVal{
+            color: #FEEA25;
+            font-weight: 700;
+            font-size: 0.19rem;
+          }
+        }
+      }
+   }
+    .bigDiv:nth-of-type(1){
+      .bigDiv_Div{
+        background: #86cb6e;
+      }
+    }
+    .bigDiv:nth-of-type(2){
+      .bigDiv_Div{
+        background: #f1b157;
+      }
+    }
+    .bigDiv:nth-of-type(3){
+      .bigDiv_Div{
+        background: #7ca7ec;
+      }
+    }
+
+  }
+  .bottom{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    height: 60%;
+    //border: 1px solid black;
+    >.bottomDiv{
+      flex: 0 0 50%;
+      cursor: pointer;
+      //border: 1px solid blue;
+      padding: 8px;
+      .bottomList{
+        width: 100%;
+        height: 100%;
+        //border: 1px solid red;
+        background-image: url("../../../../assets/images/ledDriver/dakuang.png");
+        background-size:100% 100% ;
+        background-repeat:no-repeat;
+        .BottomName{
+          color: #5BF2FD;
+          height: 45%;
+          display: flex;
+          align-items: flex-end;
+          padding-left: 10%;
+          font-size: 0.19rem;
+        }
+        .BottomVal{
+          color: #79FE00;
+          height: 45%;
+          display: flex;
+          align-items: flex-end;
+          justify-content:flex-end;
+          padding-right: 10%;
+          font-size: 0.25rem;
+          font-weight:700;
+          span{
+            color: #81E8B7;
+            font-size: 0.15rem;
+            font-weight: 100;
+            margin-left: 3px;
+            margin-bottom: 2px;
+          }
+        }
+      }
+    }
+  }
+}
+.leftBottomList{
+  .top{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    height: 23%;
+    //border: 1px solid black;
+    >.topDiv{
+      flex: 0 0 33%;
+      cursor: pointer;
+      padding: 3px;
+      .topList{
+        width: 100%;
+        height: 100%;
+        //border: 1px solid red;
+        background-image: url("../../../../assets/images/ledDriver/xiaokuang.png");
+        background-size:100% 100% ;
+        background-repeat:no-repeat;
+        .topName{
+          color: #5BF2FD;
+          //color: #fd271c;
+          height: 45%;
+          display: flex;
+          align-items: flex-end;
+          padding-left: 6%;
+          font-size: 0.13rem;
+        }
+        .topVal{
+          color: #79FE00;
+          height: 50%;
+
+          display: flex;
+          align-items: flex-end;
+          justify-content:flex-end;
+          padding-right: 18%;
+          font-size: 0.25rem;
+          font-weight:700;
+          span{
+            color: #81E8B7;
+            font-size: 0.15rem;
+            font-weight: 100;
+            margin-left: 3px;
+            margin-bottom: 2px;
+          }
+        }
+      }
+    }
+  }
+  .bottom{
+    width: 100%;
+    height: 76%;
+    //border: 1px solid red;
+  }
+}
+.centerBottomTitle{
+  h3{
+    text-align: left;
+    color: #555;
+    font-size: 0.21rem;
+    padding: 6px 0;
+    //border: 1px solid #fff;
+  }
+}
+.centerBottomDiv{
+  display: flex;
+  //border: 1px solid red;
+  .listDiv{
+    height: 99%;
+    flex: 0 0 33%;
+    display: flex;
+    justify-content: center;
+    .top{
+      width:1.8rem;
+      height: 1.7rem;
+      cursor: pointer;
+      background-image: url("../../../../assets/images/ledDriver/waiquanyuanxing.png");
+      background-size:100% auto;
+      background-position: center top;
+      background-repeat: no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      //border: 1px solid #fff;
+      >div{
+        //border: 1px solid red;
+        width: 1rem;
+        .topVal{
+          font-size: 0.4rem;
+        }
+        .bottomName{
+          font-size: 0.2rem;
+          background-image: url("../../../../assets/images/ledDriver/tucengwaiquan.png");
+          background-size:100% 100%;
+          background-repeat: no-repeat;
+          //border: 1px solid red;
+          padding: 2px 0 ;
+        }
+      }
+    }
+  }
+  .listDiv{
+    .topVal {
+      color:#B4FC1F;
+    }
+    .bottomName{
+      color: #01E0EB;
+    }
+  }
+  .listDiv:nth-of-type(3){
+    .topVal {
+      color: #FF8440;
+    }
+    .bottomName{
+      color: #FF8440;
+    }
+  }
+}
+
+.massDriver {
+  .titleDiv {
+    background-color: #5ca5e9;
+
+    h3 {
+      color: #fff;
+    }
+  }
+
+  // 左上
+  .leftUpList > div > .list {
+    background: #eee;
+
+    .name {
+      color: #333;
+    }
+
+    .val {
+      font-size: 18px;
+      color: #5ca5e9;
+    }
+  }
+
+  .leftUpList > div > .list:first-child .val{
+      color: #e68220;
+  }
+
+  .leftUpList > div > .list:nth-child(2n) {
+    background: #fff;
+  }
+
+  // 左下
+  .leftBottomList .top > .topDiv .topList {
+    background-image: url("../../../../assets/images/ledDriver/xiaokuang_1.png");
+
+    .topName {
+      color: #4d4d4d;
+    }
+
+    .topVal {
+      color: #80c06c;
+
+      span {
+        color: #80c06c;
+      }
+    }
+  }
+
+
+
+  // 地图
+  .mapSign .mapDiv .name, .mapSign .mapDiv > div .unit {
+    color: #656565;
+  }
+  .mapSign .mapDiv > div .val {
+    background-image: none !important;
+    border: 1px solid #30c4ae;
+    background-color: #30c4ae;
+    color: #fff;
+  }
+
+  // 中下
+  .centerBottomDiv .listDiv {
+
+    .top > div .bottomName {
+      background-image: none;
+    }
+  }
+
+  .centerBottomDiv .listDiv:nth-child(1) {
+    .top {
+      background-image: url("../../../../assets/images/ledDriver/waiquanyuanxing_1.png");
+
+      > div {
+        .topVal {
+          color: #27cad9;
+        }
+
+        .bottomName {
+          color: #27cad9;
+          background-image: url("../../../../assets/images/ledDriver/tucengwaiquan_1.png");
+        }
+      }
+    }
+  }
+
+  .centerBottomDiv .listDiv:nth-child(2) {
+    .top {
+      background-image: url("../../../../assets/images/ledDriver/waiquanyuanxing_2.png");
+
+      > div {
+        .topVal {
+          color: #74bc59;
+        }
+
+        .bottomName {
+          color: #74bc59;
+          background-image: url("../../../../assets/images/ledDriver/tucengwaiquan_2.png");
+        }
+      }
+    }
+  }
+
+  .centerBottomDiv .listDiv:nth-child(3) {
+    .top {
+      background-image: url("../../../../assets/images/ledDriver/waiquanyuanxing_3.png");
+
+      > div {
+        .topVal {
+          color: #f26d5e;
+        }
+
+        .bottomName {
+          color: #f26d5e;
+          background-image: url("../../../../assets/images/ledDriver/tucengwaiquan_3.png");
+        }
+      }
+    }
+  }
+
+  // 右下
+  .rightBottomList .bottom > .bottomDiv .bottomList {
+    background-image: url("../../../../assets/images/ledDriver/dakuang_1.png");
+
+    .BottomName {
+      color: #4d4d4d;
+    }
+
+    .BottomVal {
+      color: #f4ad1d;
+
+      span {
+        color: #d2920e;
+      }
+    }
+  }
+}
